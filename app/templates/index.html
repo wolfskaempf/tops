@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}TOPs{% endblock %}
+{% block content %}
+    <div class="container">
+        <a class="button" href="{{ url_for('tops_create') }}">TOP einreichen</a>
+        <a class="button" href="{{ url_for('tops_list') }}">TOPs ansehen</a>
+    </div>
+
+{% endblock %}

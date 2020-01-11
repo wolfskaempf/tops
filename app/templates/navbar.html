@@ -1,0 +1,29 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            TOPs
+        </a>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+           data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbar" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="{{ url_for('index') }}">
+                Home
+            </a>
+
+            <a class="navbar-item" href="{{ url_for('tops_create') }}">
+                TOP einreichen
+            </a>
+
+            <a class="navbar-item" href="{{ url_for('tops_list') }}">
+                TOPs ansehen
+            </a>
+        </div>
+</nav>
