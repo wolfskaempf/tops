@@ -1,5 +1,6 @@
-from flask import render_template, flash, redirect, url_for
 from datetime import datetime, timedelta
+from flask import render_template, flash, redirect, url_for
+from sqlalchemy import desc
 from app import app, db
 from app.forms import CreateTopForm
 from app.models import Top
@@ -28,5 +29,5 @@ def tops_create():
 
 @app.route('/tops/list')
 def tops_list():
-    tops = Top.query.all()
+    tops = Top.query.order_by(desc(Top.eingereicht_am)).all()
     return render_template('tops/list.html', tops=tops)

@@ -1,9 +1,23 @@
 {% extends "base.html" %}
 {% block title %}TOPs{% endblock %}
 {% block content %}
-    <div class="container">
-        <a class="button" href="{{ url_for('tops_create') }}">TOP einreichen</a>
-        <a class="button" href="{{ url_for('tops_list') }}">TOPs ansehen</a>
-    </div>
+    <section class="hero is-medium is-primary is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    TOPs
+                </h1>
+                <h2 class="subtitle">
+                    TOPs transparent und zugänglich sammeln.
+                </h2>
+            </div>
+            <div class="container buttons" style="margin-top: 0.8em;">
+                <a class="button is-primary is-inverted is-outlined" href="{{ url_for('tops_create') }}">TOP
+                    einreichen</a>
+                <a class="button is-primary is-inverted is-outlined" href="{{ url_for('tops_list') }}">TOPs ansehen</a>
+            </div>
+        </div>
+    </section>
+
 
 {% endblock %}

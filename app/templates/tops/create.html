@@ -1,68 +1,70 @@
 {% extends "base.html" %}
 {% block title %}TOP einreichen{% endblock %}
 {% block content %}
-    <div class="container">
-        <form action="" method="post">
-            {{ form.hidden_tag() }}
-            <div class="field">
-                <label class="label">Titel</label>
-                <div class="control">
-                    {{ form.titel(size=100, class="input") }}
-                    {% for error in form.titel.errors %}
-                        <p class="help is-danger">{{ error }}</p>
-                    {% endfor %}
+    <section class="section">
+        <div class="container">
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <div class="field">
+                    <label class="label">Titel</label>
+                    <div class="control">
+                        {{ form.titel(size=100, class="input") }}
+                        {% for error in form.titel.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
 
+                    </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <label class="label">Eingereicht von</label>
-                <div class="control">
-                    {{ form.eingereicht_von(size=100, class="input") }}
-                    {% for error in form.eingereicht_von.errors %}
-                        <p class="help is-danger">{{ error }}</p>
-                    {% endfor %}
+                <div class="field">
+                    <label class="label">Eingereicht von</label>
+                    <div class="control">
+                        {{ form.eingereicht_von(size=100, class="input") }}
+                        {% for error in form.eingereicht_von.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <label class="label">Frist</label>
-                <div class="control">
-                    {{ form.frist(class="input", placeholder="TT.MM.YYYY") }}
-                    {% for error in form.frist.errors %}
-                        <p class="help is-danger">{{ error }}</p>
-                    {% endfor %}
-                    <p class="help">Optional. Format: TT.MM.YYYY</p>
+                <div class="field">
+                    <label class="label">Frist</label>
+                    <div class="control">
+                        {{ form.frist(class="input", placeholder="TT.MM.YYYY") }}
+                        {% for error in form.frist.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                        <p class="help">Optional. Format: TT.MM.YYYY</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <label class="label">Beschreibung</label>
-                <div class="control">
-                    {{ form.beschreibung(class="textarea") }}
-                    {% for error in form.beschreibung.errors %}
-                        <p class="help is-danger">{{ error }}</p>
-                    {% endfor %}
-                    <p class="help">Optional</p>
+                <div class="field">
+                    <label class="label">Beschreibung</label>
+                    <div class="control">
+                        {{ form.beschreibung(class="textarea") }}
+                        {% for error in form.beschreibung.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                        <p class="help">Optional</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <label class="label">Abstimmungsfragen</label>
-                <div class="control">
-                    {{ form.abstimmungsfragen(class="textarea") }}
-                    {% for error in form.abstimmungsfragen.errors %}
-                        <p class="help is-danger">{{ error }}</p>
-                    {% endfor %}
-                    <p class="help">Optional</p>
+                <div class="field">
+                    <label class="label">Abstimmungsfragen</label>
+                    <div class="control">
+                        {{ form.abstimmungsfragen(class="textarea") }}
+                        {% for error in form.abstimmungsfragen.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                        <p class="help">Optional</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="control">
-                {{ form.submit(class="button is-success") }}
-            </div>
+                <div class="control">
+                    {{ form.submit(class="button is-success") }}
+                </div>
 
-        </form>
-    </div>
+            </form>
+        </div>
+    </section>
 
 {% endblock %}

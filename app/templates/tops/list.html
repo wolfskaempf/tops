@@ -1,36 +1,50 @@
 {% extends "base.html" %}
 {% block title %}TOPs ansehen{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <style>
+        .preserves-whitespace {
+            white-space: pre-wrap;
+        }
+    </style>
+{% endblock %}
 {% block content %}
-    <div class="container">
+    <div class="section">
         {% for top in tops %}
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">
-                        {{ top.titel }}
-                    </p>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        <p>Eingereicht von {{ top.eingereicht_von }} am
-                            <time datetime="{{ top.eingereicht_am.strftime('%Y-%m-%d') }}">{{ top.eingereicht_am.strftime('%d.%m.%Y um %H:%M') }}</time>
-                        </p>
-                        {% if top.frist %}
-                            <p><strong>Frist:</strong>
-                                <time datetime="{{ top.frist.strftime('%Y-%m-%d') }}">{{ top.frist.strftime('%d.%m.%Y') }}</time>
-                            </p>
-                        {% else %}
-                            <p>Es gibt keine Frist.</p>
-                        {% endif %}
-                        {% if top.beschreibung %}
-                            <p>Beschreibung: {{ top.beschreibung }}</p>
-                        {% else %}
-                            <p>Es wurde keine Beschreibung eingereicht.</p>
-                        {% endif %}
-                        {% if top.abstimmungsfragen %}
-                            <p>Abstimmungsfragen: {{ top.abstimmungsfragen }}</p>
-                        {% else %}
-                            <p>Es wurden keine Abstimmunsfragen eingereicht.</p>
-                        {% endif %}
+            <div class="container" style="margin-bottom: 1.2em;">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4">
+                                    {{ top.titel }}
+                                </p>
+                                <p class="subtitle is-6">{{ top.eingereicht_von }} //
+                                    <time datetime="{{ top.eingereicht_am.strftime('%Y-%m-%d') }}">{{ top.eingereicht_am.strftime('%d.%m.%Y, %H:%M') }}</time>
+                                    Uhr
+                                </p>
+                            </div>
+                        </div>
+                        <div class="content">
+
+                            {% if top.frist %}
+                                <p><strong>Frist:</strong>
+                                    <time datetime="{{ top.frist.strftime('%Y-%m-%d') }}">{{ top.frist.strftime('%d.%m.%Y') }}</time>
+                                </p>
+                            {% else %}
+                                <p>Es gibt keine Frist.</p>
+                            {% endif %}
+                            {% if top.beschreibung %}
+                                <p class="preserves-whitespace">Beschreibung: {{ top.beschreibung }}</p>
+                            {% else %}
+                                <p>Es wurde keine Beschreibung eingereicht.</p>
+                            {% endif %}
+                            {% if top.abstimmungsfragen %}
+                                <p class="preserves-whitespace">Abstimmungsfragen: <br>{{ top.abstimmungsfragen }}</p>
+                            {% else %}
+                                <p>Es wurden keine Abstimmunsfragen eingereicht.</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>

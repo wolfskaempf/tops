@@ -3,22 +3,29 @@
 <head>
     {% block head %}
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
+        {% block styles %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
+        {% endblock %}
+        <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
         <title>{% block title %}{% endblock %} : tops</title>
     {% endblock %}
 </head>
 <body>
 {% include "navbar.html" %}
-<div class="container">
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="notification is-success">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <section class="section">
+            <div class="container">
+                {% for message in messages %}
+                    <div class="notification is-success">
+                        {{ message }}
+                    </div>
+                    </section>
+                {% endfor %}
+    {% endif %}
+{% endwith %}
+
 
 </div>
 {% block content %}{% endblock %}
