@@ -7,7 +7,6 @@ from app.models import Top
 
 
 @app.route('/')
-@app.route('/index')
 def index():
     tops = Top.query.order_by(desc(Top.eingereicht_am)).filter(
         or_(Top.archiviert == False, Top.archiviert == None)).all()
