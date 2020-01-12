@@ -10,6 +10,7 @@ class Top(db.Model):
     frist = db.Column(db.Date, index=True, unique=False, nullable=True)
     beschreibung = db.Column(db.Text, nullable=True)
     abstimmungsfragen = db.Column(db.Text, nullable=True)
+    archiviert = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return "<Top {} von {}>".format(self.titel, self.eingereicht_von)
