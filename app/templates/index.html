@@ -18,6 +18,14 @@
             </div>
         </div>
     </section>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Aktuelle TOPs</h1>
+            {% for top in tops %}
+                {% include "tops/_top_card.html" %}
+            {% endfor %}
+        </div>
+    </section>
 
 
 {% endblock %}

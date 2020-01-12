@@ -10,7 +10,7 @@
 {% endblock %}
 {% block content %}
     <div class="section">
-        <h1>{{ title }}</h1>
+        <div class="container" style="margin-bottom: 1.8em;"><h1 class="title">{{ title }}</h1></div>
         {% for top in tops %}
             {% include "tops/_top_card.html" %}
         {% endfor %}

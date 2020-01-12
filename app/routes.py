@@ -9,7 +9,9 @@ from app.models import Top
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', time=datetime.utcnow())
+    tops = Top.query.order_by(desc(Top.eingereicht_am)).filter(
+        or_(Top.archiviert == False, Top.archiviert == None)).all()
+    return render_template('index.html', tops=tops)
 
 
 @app.route('/tops/create', methods=['GET', 'POST'])
@@ -31,13 +33,13 @@ def tops_create():
 def tops_list():
     tops = Top.query.order_by(desc(Top.eingereicht_am)).filter(
         or_(Top.archiviert == False, Top.archiviert == None)).all()
-    return render_template('tops/list.html', tops=tops)
+    return render_template('tops/list.html', tops=tops, title="Aktuelle TOPs")
 
 
 @app.route('/tops/archiv')
 def tops_archiv():
     tops = Top.query.order_by(desc(Top.eingereicht_am)).filter(Top.archiviert == True).all()
-    return render_template('tops/list.html', tops=tops)
+    return render_template('tops/list.html', tops=tops, title="Archiv")
 
 
 @app.route('/tops/<id>/archivieren')
