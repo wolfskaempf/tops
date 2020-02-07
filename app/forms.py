@@ -10,3 +10,8 @@ class CreateTopForm(FlaskForm):
     beschreibung = TextAreaField('Beschreibung')
     abstimmungsfragen = TextAreaField('Abstimungsfragen')
     submit = SubmitField('Einreichen')
+
+
+class LoginForm(FlaskForm):
+    management_password = StringField('Passwort', validators=[DataRequired()])
+    submit = SubmitField('Autorisierungstoken setzen')

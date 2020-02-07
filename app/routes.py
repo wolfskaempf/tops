@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, current_app, make_response, request
 from sqlalchemy import desc, or_
 from app import app, db
-from app.forms import CreateTopForm
+from app.forms import CreateTopForm, LoginForm
 from app.models import Top
 
 
@@ -43,6 +43,12 @@ def tops_archiv():
 
 @app.route('/tops/<id>/archivieren')
 def tops_archivieren(id):
+    management_password = current_app.config['MANAGEMENT_PASSWORD']
+    if management_password is not None:
+        management_cookie_value = request.cookies.get('management_password')
+        if management_cookie_value is None or management_cookie_value != management_password:
+            flash("Du bist nicht autorisiert dies zu tun.")
+            return redirect(url_for('login'))
     top = Top.query.get(id)
     top.archiviert = not top.archiviert
     db.session.add(top)
@@ -57,3 +63,21 @@ def tops_archivieren(id):
 def tops_delete(id):
     top = Top.query.get(id)
     return render_template('tops/delete.html', top=top)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash("Dein Autorisierungstoken wurde gesetzt.")
+        response = make_response(redirect(url_for('index')))
+        response.set_cookie('management_password', form.management_password.data)
+        return response
+    return render_template('login.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    response = make_response(redirect(url_for('index')))
+    response.set_cookie('management_password', '', expires=0)
+    return response

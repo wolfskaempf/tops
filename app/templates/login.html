@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <div class="field">
+                    <label class="label">Passwort</label>
+                    <div class="control">
+                        {{ form.management_password(size=100, class="input") }}
+                        {% for error in form.management_password.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <div class="control">
+                    {{ form.submit(class="button is-success") }}
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+{% endblock %}
