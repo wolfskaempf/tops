@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% block title %}TOPs{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <style>
+        .preserves-whitespace {
+            white-space: pre-wrap;
+        }
+    </style>
+{% endblock %}
 {% block content %}
     <section class="hero is-medium is-primary is-bold">
         <div class="hero-body">
@@ -14,13 +22,15 @@
             <div class="container buttons" style="margin-top: 0.8em;">
                 <a class="button is-primary is-inverted is-outlined" href="{{ url_for('tops_create') }}">TOP
                     einreichen</a>
-                <a class="button is-primary is-inverted is-outlined" href="{{ url_for('tops_list') }}">TOPs ansehen</a>
+                <a class="button is-primary is-inverted is-outlined" href="{{ url_for('tops_list') }}">Aktuelle TOPs</a>
+                <a class="button is-primary is-inverted is-outlined" href="{{ url_for('tops_table') }}">Aktuelle TOPs
+                    als Tabelle</a>
             </div>
         </div>
     </section>
     <section class="section">
         <div class="container">
-            <h1 class="title">Aktuelle TOPs</h1>
+            <h1 class="title">Neueste TOPs</h1>
             {% for top in tops %}
                 {% include "tops/_top_card.html" %}
             {% endfor %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}TOPs als Tabelle{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <style>
+        .preserves-whitespace {
+            white-space: pre-wrap;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="section">
+        <div class="container" style="margin-bottom: 1.8em;">
+            <h1 class="title">Tabelle</h1>
+            <p>Diese Tabelle sortiert die TOPs zunächst nach der Frist, sodass die Fristen, die als nächstes Ablaufen,
+                ganz vorne stehen. Ist die Frist identisch, so wird nach dem Zeitpunkt des Einreichens sortiert, sodass
+                ältere Einreichungen oben stehen. TOPs ohne Frist werden so sortiert, dass die ältesten oben stehen.</p>
+        </div>
+
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>Titel</td>
+                    <td>Frist</td>
+                    <td>Eingereicht von</td>
+                    <td>Eingereicht am</td>
+                    <td>🗄️</td>
+                </tr>
+                </thead>
+                {% for top in tops %}
+                    <tr>
+                        <td>{{ top.titel }}</td>
+                        <td>
+                            {% if top.frist %}
+                                <time datetime="{{ top.frist.strftime('%Y-%m-%d') }}">
+                                    {{ top.frist.strftime('%d.%m.%Y') }}
+                                </time>
+                            {% else %}
+                                Keine Frist
+                            {% endif %}
+                        </td>
+                        <td>{{ top.eingereicht_von }}</td>
+                        <td>
+                            <time datetime="{{ top.eingereicht_am.strftime('%Y-%m-%d') }}">
+                                {{ top.eingereicht_am.strftime('%d.%m.%Y, %H:%M') }}
+                            </time>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('tops_archivieren', id=top.id, destination="tops_table") }}" class="button is-outlined is-info is-small">🗄️</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

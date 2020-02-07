@@ -30,9 +30,16 @@ def tops_create():
 
 @app.route('/tops/list')
 def tops_list():
-    tops = Top.query.order_by(desc(Top.eingereicht_am)).filter(
+    tops = Top.query.order_by(Top.frist.asc().nullslast(), Top.eingereicht_am.asc()).filter(
         or_(Top.archiviert == False, Top.archiviert == None)).all()
     return render_template('tops/list.html', tops=tops, title="Aktuelle TOPs")
+
+
+@app.route('/tops/table')
+def tops_table():
+    tops = Top.query.order_by(Top.frist.asc().nullslast(), Top.eingereicht_am.asc()).filter(
+        or_(Top.archiviert == False, Top.archiviert == None)).all()
+    return render_template('tops/table.html', tops=tops)
 
 
 @app.route('/tops/archiv')
@@ -41,8 +48,9 @@ def tops_archiv():
     return render_template('tops/list.html', tops=tops, title="Archiv")
 
 
-@app.route('/tops/<id>/archivieren')
-def tops_archivieren(id):
+@app.route('/tops/<id>/archivieren', defaults={'destination': None})
+@app.route('/tops/<id>/archivieren/<destination>')
+def tops_archivieren(id, destination):
     management_password = current_app.config['MANAGEMENT_PASSWORD']
     if management_password is not None:
         management_cookie_value = request.cookies.get('management_password')
@@ -53,7 +61,9 @@ def tops_archivieren(id):
     top.archiviert = not top.archiviert
     db.session.add(top)
     db.session.commit()
-    if top.archiviert:
+    if destination is not None:
+        return redirect(url_for(destination))
+    elif top.archiviert:
         return redirect(url_for('tops_list'))
     else:
         return redirect(url_for('tops_archiv'))

@@ -8,7 +8,7 @@
                 <div class="field">
                     <label class="label">Passwort</label>
                     <div class="control">
-                        {{ form.management_password(size=100, class="input") }}
+                        {{ form.management_password(size=100, class="input", type="password") }}
                         {% for error in form.management_password.errors %}
                             <p class="help is-danger">{{ error }}</p>
                         {% endfor %}
