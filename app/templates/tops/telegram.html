@@ -5,7 +5,7 @@
 {% if top.frist %}<strong>Frist:</strong> {{ top.frist.strftime('%d.%m.%Y') }}{% else %}Es gibt keine Frist.{% endif %}
 
 {% if top.beschreibung %}<strong>Beschreibung:</strong>
-    {{ top.beschreibung }}{% else %}Es wurde keine Beschreibung eingereicht.{% endif %}
+{{ top.beschreibung }}{% else %}Es wurde keine Beschreibung eingereicht.{% endif %}
 
 {% if top.abstimmungsfragen %}<strong>Abstimmungsfragen:</strong>
-    {{ top.abstimmungsfragen }}{% else %}Es wurden keine Abstimmungsfragen eingereicht.{% endif %}
+{{ top.abstimmungsfragen }}{% else %}Es wurden keine Abstimmungsfragen eingereicht.{% endif %}
