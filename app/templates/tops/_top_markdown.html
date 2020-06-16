@@ -1,0 +1,23 @@
+<div class="is-family-monospace">
+    <p>### {{ top.titel }}</p>
+
+    <p>*{{ top.eingereicht_von }} // {{ top.eingereicht_am.strftime('%d.%m.%Y, %H:%M') }} Uhr*</p>
+
+    <p>{% if top.frist %}**Frist:** {{ top.frist.strftime('%d.%m.%Y') }}
+    {% else %}
+        Es gibt keine Frist.
+    {% endif %}</p>
+
+    {% if top.beschreibung %}<p>**Beschreibung:**</p>
+        <p class="preserves-whitespace">>{{ top.beschreibung }}</p>
+    {% else %}
+        <p>Es wurde keine Beschreibung eingereicht.</p>
+    {% endif %}
+
+    {% if top.abstimmungsfragen %}
+        <p>#### Abstimmungsfrage X</p>
+        <p class="preserves-whitespace">>{{ top.abstimmungsfragen }}</p>
+    {% else %}
+        <p>Es wurden keine Abstimmungsfragen eingereicht.</p>
+    {% endif %}
+</div>

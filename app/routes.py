@@ -1,4 +1,6 @@
+import platform
 from datetime import datetime, timedelta
+import subprocess, shlex
 from flask import render_template, flash, redirect, url_for, current_app, make_response, request
 from sqlalchemy import desc, or_
 from app import app, db
@@ -13,6 +15,10 @@ def index():
     return render_template('index.html', tops=tops)
 
 
+def render_top_to_telegram_html(top):
+    return render_template('tops/telegram.html', top=top)
+
+
 @app.route('/tops/create', methods=['GET', 'POST'])
 def tops_create():
     form = CreateTopForm()
@@ -24,6 +30,20 @@ def tops_create():
         db.session.commit()
         flash("Danke {}, dein TOP mit dem Titel \"{}\" wurde erfolgreich eingereicht.".format(form.eingereicht_von.data, \
                                                                                               form.titel.data))
+
+        # This might introduce a RCE-Vulnerability, so don't actually use this until this notice is revoked
+        telegram_active = current_app.config['ENABLE_TELEGRAM_INTEGRATION']
+        if telegram_active:
+            telegram_bot_token = current_app.config['TELEGRAM_BOT_TOKEN']
+            telegram_chat_id = current_app.config['TELEGRAM_CHAT_ID']
+            message = render_top_to_telegram_html(t)
+            command = './telegram -t "{}" -c "{}" -H "{}"'.format(telegram_bot_token, telegram_chat_id, message)
+            if platform.system() == "Windows":
+                command = "bash.exe " + command
+            command = shlex.split(command)
+            print(command)
+            subprocess.Popen(command)
+
         return redirect(url_for('tops_list'))
     return render_template('tops/create.html', form=form)
 
@@ -33,6 +53,13 @@ def tops_list():
     tops = Top.query.order_by(Top.frist.asc().nullslast(), Top.eingereicht_am.asc()).filter(
         or_(Top.archiviert == False, Top.archiviert == None)).all()
     return render_template('tops/list.html', tops=tops, title="Aktuelle TOPs")
+
+
+@app.route('/tops/list/markdown')
+def tops_list_markdown():
+    tops = Top.query.order_by(Top.frist.asc().nullslast(), Top.eingereicht_am.asc()).filter(
+        or_(Top.archiviert == False, Top.archiviert == None)).all()
+    return render_template('tops/list_markdown.html', tops=tops, title="TOPs als Markdown")
 
 
 @app.route('/tops/table')

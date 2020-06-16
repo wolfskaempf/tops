@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block head %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/clipboard.js') }}"></script>
+
+{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <style>
+        .preserves-whitespace {
+            white-space: pre-wrap;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="section">
+        <div class="container" style="margin-bottom: 1.8em;">
+            <h1 class="title">{{ title }}</h1>
+            <button onclick="copy()">Text kopieren</button>
+        </div>
+        <div class="container" id="markdown">
+            {% for top in tops %}
+                {% include "tops/_top_markdown.html" %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
