@@ -39,3 +39,6 @@ Scripts/*
 Lib/*
 tcl/*
 .vscode/*
+
+.venv
+*.bak
