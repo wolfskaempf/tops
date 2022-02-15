@@ -1,12 +1,12 @@
 import platform
+import subprocess
+import shlex
 from datetime import datetime, timedelta
-import subprocess, shlex
-from flask import render_template, flash, redirect, url_for, current_app, make_response, request
+from flask import render_template, flash, redirect, url_for, current_app, make_response, request, json
 from sqlalchemy import desc, or_
 from app import app, db
 from app.forms import CreateTopForm, LoginForm
 from app.models import Top
-
 
 @app.route('/')
 def index():
@@ -60,6 +60,12 @@ def tops_list_markdown():
     tops = Top.query.order_by(Top.frist.asc().nullslast(), Top.eingereicht_am.asc()).filter(
         or_(Top.archiviert == False, Top.archiviert == None)).all()
     return render_template('tops/list_markdown.html', tops=tops, title="TOPs als Markdown")
+
+@app.route('/tops/list.json')
+def tops_list_json():
+    tops = Top.query.order_by(Top.frist.asc().nullslast(), Top.eingereicht_am.asc()).filter(
+        or_(Top.archiviert == False, Top.archiviert == None)).all()
+    return json.jsonify([dict(top.as_dict()) for top in tops])
 
 
 @app.route('/tops/table')

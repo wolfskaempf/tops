@@ -14,3 +14,6 @@ class Top(db.Model):
 
     def __repr__(self):
         return "<Top {} von {}>".format(self.titel, self.eingereicht_von)
+
+    def as_dict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
