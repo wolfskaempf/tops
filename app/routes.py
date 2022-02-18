@@ -55,17 +55,18 @@ def tops_list():
     return render_template('tops/list.html', tops=tops, title="Aktuelle TOPs")
 
 
-@app.route('/tops/list/markdown')
-def tops_list_markdown():
-    tops = Top.query.order_by(Top.frist.asc().nullslast(), Top.eingereicht_am.asc()).filter(
-        or_(Top.archiviert == False, Top.archiviert == None)).all()
-    return render_template('tops/list_markdown.html', tops=tops, title="TOPs als Markdown")
-
 @app.route('/tops/list.json')
 def tops_list_json():
     tops = Top.query.order_by(Top.frist.asc().nullslast(), Top.eingereicht_am.asc()).filter(
         or_(Top.archiviert == False, Top.archiviert == None)).all()
     return json.jsonify([dict(top.as_dict()) for top in tops])
+
+
+@app.route('/tops/list/markdown')
+def tops_list_markdown():
+    tops = Top.query.order_by(Top.frist.asc().nullslast(), Top.eingereicht_am.asc()).filter(
+        or_(Top.archiviert == False, Top.archiviert == None)).all()
+    return render_template('tops/list_markdown.html', tops=tops, title="TOPs als Markdown")
 
 
 @app.route('/tops/table')
