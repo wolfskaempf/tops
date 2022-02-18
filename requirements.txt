@@ -17,3 +17,4 @@ Werkzeug
 WTForms
 gunicorn
 psycopg2
+aiohttp

@@ -8,6 +8,9 @@ from app import app, db
 from app.forms import CreateTopForm, LoginForm
 from app.models import Top
 
+import aiohttp
+import asyncio
+
 @app.route('/')
 def index():
     tops = Top.query.order_by(desc(Top.eingereicht_am)).filter(
@@ -17,6 +20,19 @@ def index():
 
 def render_top_to_telegram_html(top):
     return render_template('tops/telegram.html', top=top)
+
+
+def render_top_to_webhook_html(top):
+    return render_template('tops/_top_webhook.html', top=top)
+
+
+async def send_webhook(payload):
+    webhook_url = current_app.config['WEBHOOK_URL']
+    webhook_authorization_bearer = current_app.config['WEBHOOK_AUTHORIZATION_BEARER']
+    headers = {'Authorization': 'Bearer {}'.format(webhook_authorization_bearer), 'Content-Type': 'application/json'}
+    async with aiohttp.ClientSession() as session:
+        async with session.post(webhook_url, data=payload, headers=headers) as resp:
+            print(resp.text())
 
 
 @app.route('/tops/create', methods=['GET', 'POST'])
@@ -30,6 +46,13 @@ def tops_create():
         db.session.commit()
         flash("Danke {}, dein TOP mit dem Titel \"{}\" wurde erfolgreich eingereicht.".format(form.eingereicht_von.data, \
                                                                                               form.titel.data))
+        webhook_active = current_app.config['ENABLE_WEBHOOK_INTEGRATION']
+        if webhook_active:
+            message = render_top_to_webhook_html(t)
+            json_format = {"message": message}
+            json_payload = json.dumps(json_format)
+            print(message)
+            asyncio.run(send_webhook(json_payload))
 
         # This might introduce a RCE-Vulnerability, so don't actually use this until this notice is revoked
         telegram_active = current_app.config['ENABLE_TELEGRAM_INTEGRATION']
