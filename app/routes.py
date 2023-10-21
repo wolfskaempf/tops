@@ -32,7 +32,7 @@ async def send_webhook(payload):
     headers = {'Authorization': 'Bearer {}'.format(webhook_authorization_bearer), 'Content-Type': 'application/json'}
     async with aiohttp.ClientSession() as session:
         async with session.post(webhook_url, data=payload, headers=headers) as resp:
-            print(resp.text())
+            pass
 
 
 @app.route('/tops/create', methods=['GET', 'POST'])
