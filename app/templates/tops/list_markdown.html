@@ -1,23 +1,27 @@
 {% extends "base.html" %}
 {% block title %}{{ title }}{% endblock %}
-{% block head %}
-    {{ super() }}
-    <script src="{{ url_for('static', filename='js/clipboard.js') }}"></script>
-
-{% endblock %}
 {% block styles %}
     {{ super() }}
-    <style>
-        .preserves-whitespace {
-            white-space: pre-wrap;
-        }
-    </style>
+
 {% endblock %}
 {% block content %}
     <div class="section">
         <div class="container" style="margin-bottom: 1.8em;">
             <h1 class="title">{{ title }}</h1>
-            <button class="button is-success" onclick="copy()">Text kopieren</button>
+            <button class="button is-success"
+              _="on click
+                       set markdownText to #markdown.innerText
+                       set buttonText to me.innerText
+                       js(me, markdownText)
+                           if ('clipboard' in window.navigator) {
+                             navigator.clipboard.writeText(markdownText)
+                           }
+                       end
+                       put 'Kopiert!' into me
+                       wait 2s
+                       put buttonText into me "
+            >Text kopieren</button>
+
         </div>
         <div class="container" id="markdown">
             {% for top in tops %}

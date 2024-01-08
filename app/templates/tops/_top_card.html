@@ -36,7 +36,7 @@
         {% if not request.path == url_for('index') %}
         <footer class="card-footer">
 
-            <a href="{{ url_for('tops_archivieren', id=top.id) }}" class="card-footer-item">
+            <a href="{{ url_for('tops_archivieren', id=top.id) }}" class="card-footer-item" hx-swap="show:none">
                 {% if request.path == url_for('tops_list') %}
                     Archivieren{% elif request.path == url_for('tops_archiv') %}In die TOPs verschieben{% endif %}</a>
         </footer>

@@ -1,16 +1,16 @@
 <!doctype html>
-<html>
+<html lang="de">
 <head>
     {% block head %}
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% block styles %}
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
-        {% endblock %}
-        <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/tops.css') }}">
+        <script src="{{ url_for('static', filename='js/htmx.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/_hyperscript.min.js') }}"></script>
         <title>{% block title %}{% endblock %} : tops</title>
     {% endblock %}
 </head>
-<body>
+<body hx-boost="true">
 {% include "navbar.html" %}
 
 {% with messages = get_flashed_messages() %}
