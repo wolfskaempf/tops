@@ -4,6 +4,14 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
+    SQLALCHEMY_POOL_RECYCLE = 30
+    SQLALCHEMY_POOL_TIMEOUT = 5
+    SQLALCHEMY_PRE_PING = True
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_recycle': SQLALCHEMY_POOL_RECYCLE,
+        'pool_timeout': SQLALCHEMY_POOL_TIMEOUT,
+        'pool_pre_ping': SQLALCHEMY_PRE_PING
+    }
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'change-this-key'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
                               'sqlite:///' + os.path.join(basedir, 'app.db')
